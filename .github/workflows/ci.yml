@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.12.4
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+
+  fixture-e2e:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: recruit
+          POSTGRES_PASSWORD: recruit
+          POSTGRES_DB: recruit_ai
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U recruit -d recruit_ai"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      AI_MODE: fixture
+      RUNTIME_MODE: native
+      STORAGE_PROVIDER: filesystem
+      QUEUE_PROVIDER: db
+      VECTOR_PROVIDER: text
+      DATABASE_URL: postgres://recruit:recruit@127.0.0.1:5432/recruit_ai
+      RECRUIT_DATA_ROOT: /tmp/recruit-ai-ci
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.12.4
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: node scripts/migrate.mjs
+        working-directory: platform
+      - run: pnpm test:e2e

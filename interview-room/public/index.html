@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Provider-neutral browser interview demo for Recruit AI Platform." />
+  <title>Recruit AI · Browser Interview</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="room-shell">
+    <header class="room-header">
+      <a class="brand" href="/">
+        <span class="brand-mark">R</span>
+        <span>Recruit AI</span>
+      </a>
+      <span class="mode-pill">Browser Demo · Synthetic Data</span>
+    </header>
+
+    <section class="stage">
+      <div class="interviewer-card">
+        <div class="interviewer-orbit" aria-hidden="true">
+          <div class="interviewer-avatar">AI</div>
+        </div>
+        <p class="eyebrow">STRUCTURED INTERVIEW</p>
+        <h1 id="room-title">AI 面试间</h1>
+        <p id="room-subtitle">公开演示版不会调用厂商专属 RTC，也不会自动做录用决定。</p>
+        <div class="progress-track" aria-label="Interview progress">
+          <span id="progress-bar"></span>
+        </div>
+        <p id="progress-label">等待会话</p>
+      </div>
+
+      <div class="conversation-card">
+        <div id="loading-state" class="state-card">
+          <span class="pulse"></span>
+          <h2>正在准备合成面试会话</h2>
+          <p>问题来自主系统生成的 projectSnapshot。</p>
+        </div>
+
+        <div id="preview-state" class="state-card" hidden>
+          <p class="eyebrow">RECRUITER PREVIEW</p>
+          <h2 id="preview-title">浏览器面试 Provider</h2>
+          <p id="preview-text">这是可替换的公开演示实现：浏览器朗读题目，候选人键入回答，完成后回写结构化报告。</p>
+        </div>
+
+        <div id="interview-state" hidden>
+          <div class="question-meta">
+            <span id="question-number">问题 1</span>
+            <span id="question-competency">项目经历</span>
+          </div>
+          <h2 id="question-text"></h2>
+          <div class="answer-box">
+            <label for="answer-input">你的回答</label>
+            <textarea id="answer-input" rows="7" placeholder="公开演示建议使用合成内容，例如：我负责了一个知识库问答 Demo……"></textarea>
+            <div class="answer-actions">
+              <button id="speak-button" class="secondary" type="button">朗读问题</button>
+              <button id="submit-button" class="primary" type="button">提交并继续</button>
+            </div>
+          </div>
+          <p id="error-message" class="error" role="alert"></p>
+        </div>
+
+        <div id="complete-state" class="state-card" hidden>
+          <div class="complete-mark">✓</div>
+          <h2>报告已回写</h2>
+          <p id="complete-summary">结构化问答和人工判断边界已发送回招聘平台。</p>
+          <a id="return-link" class="primary link-button" href="#">返回招聘平台</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Fixture mode · no external AI key required</span>
+      <span>Evidence support, not automated hiring</span>
+    </footer>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

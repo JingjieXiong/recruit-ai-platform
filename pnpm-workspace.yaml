@@ -1,0 +1,5 @@
+packages:
+  - platform
+  - interview-room
+allowBuilds:
+  msgpackr-extract: set this to true or false

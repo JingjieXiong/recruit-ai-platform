@@ -1,0 +1,13 @@
+.DS_Store
+.env
+.env.local
+.runtime/
+node_modules/
+**/node_modules/
+**/config/local.json
+*.log
+*.tmp
+coverage/
+local_data/
+review-export/
+*.zip

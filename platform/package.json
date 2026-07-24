@@ -1,0 +1,52 @@
+{
+    "name": "@recruit-ai/platform",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "packageManager": "pnpm@10.12.4",
+    "scripts": {
+        "dev": "node server.mjs",
+        "start": "node server.mjs",
+        "start:local": "node scripts/start-local.mjs",
+        "start:backend": "node scripts/start-local.mjs",
+        "stop:local": "node scripts/stop-local.mjs",
+        "worker": "node apps/worker/index.js",
+        "worker:start": "node scripts/start-worker.mjs",
+        "worker:stop": "node scripts/stop-worker.mjs",
+        "local:infra:up": "node scripts/local-infra.mjs up",
+        "local:infra:down": "node scripts/local-infra.mjs down",
+        "local:infra:status": "node scripts/local-infra.mjs status",
+        "local:infra:doctor": "node scripts/local-infra-doctor.mjs",
+        "native:doctor": "RUNTIME_MODE=native STORAGE_PROVIDER=filesystem QUEUE_PROVIDER=db VECTOR_PROVIDER=text node scripts/native-doctor.mjs",
+        "native:start": "node scripts/native-start.mjs",
+        "native:worker": "RUNTIME_MODE=native STORAGE_PROVIDER=filesystem QUEUE_PROVIDER=db VECTOR_PROVIDER=text node apps/worker/index.js",
+        "native:stop": "node scripts/native-stop.mjs",
+        "native:deps:check": "RUNTIME_MODE=native STORAGE_PROVIDER=filesystem QUEUE_PROVIDER=db VECTOR_PROVIDER=text node scripts/check-runtime-deps.mjs",
+        "native:db:migrate": "RUNTIME_MODE=native STORAGE_PROVIDER=filesystem QUEUE_PROVIDER=db VECTOR_PROVIDER=text node scripts/migrate.mjs",
+        "data:init": "node scripts/init-data-root.mjs",
+        "db:migrate": "node scripts/migrate.mjs",
+        "db:seed": "node scripts/seed.mjs",
+        "db:seed:demo": "node scripts/seed-demo.mjs",
+        "db:reset-demo": "node scripts/reset-demo-prefix.mjs",
+        "candidate:data:delete": "node scripts/delete-candidate-data.mjs",
+        "storage:audit": "node scripts/audit-persistent-storage.mjs",
+        "local:data:reset": "node scripts/reset-local-data.mjs --yes",
+        "applications:repair": "node scripts/repair-applications.mjs",
+        "deps:check": "node scripts/check-runtime-deps.mjs",
+        "check": "node scripts/check.mjs",
+        "verify": "node scripts/verify_backend_v1.mjs"
+    },
+    "dependencies": {
+        "@fastify/static": "^9.1.1",
+        "bullmq": "^5.63.0",
+        "dotenv": "^17.2.3",
+        "fastify": "^5.6.2",
+        "minio": "^8.0.6",
+        "pg": "^8.16.3",
+        "zod": "^4.1.12"
+    },
+    "devDependencies": {
+        "playwright": "^1.61.1"
+    },
+    "description": "Candidate, recruiter, API, and worker modules for Recruit AI Platform."
+}

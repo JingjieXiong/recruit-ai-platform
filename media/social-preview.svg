@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eff7d0"/>
+      <stop offset="0.48" stop-color="#f7faf3"/>
+      <stop offset="1" stop-color="#d9f1ea"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#173a36"/>
+      <stop offset="1" stop-color="#315f56"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#173a36" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <circle cx="1130" cy="78" r="210" fill="#d8ef91" opacity="0.32"/>
+  <circle cx="90" cy="610" r="250" fill="#a9dfcf" opacity="0.25"/>
+
+  <g transform="translate(78 70)">
+    <rect x="0" y="0" width="1124" height="500" rx="42" fill="#fffdf8" opacity="0.93" filter="url(#shadow)"/>
+    <g transform="translate(52 48)">
+      <rect width="62" height="62" rx="20" fill="url(#card)"/>
+      <text x="31" y="41" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="800" fill="#fff">R</text>
+      <text x="82" y="39" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="750" fill="#173a36">Recruit AI Platform</text>
+    </g>
+
+    <g transform="translate(52 190)">
+      <text x="0" y="0" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="-2" fill="#173a36">Evidence-first recruiting,</text>
+      <text x="0" y="64" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="-2" fill="#173a36">from application to interview.</text>
+      <text x="2" y="132" font-family="Inter, Arial, sans-serif" font-size="22" fill="#5f7671">
+        Resume screening · Candidate evaluation · Interview orchestration · Human review
+      </text>
+    </g>
+
+    <g transform="translate(52 398)">
+      <rect width="210" height="48" rx="24" fill="#dcefe8"/>
+      <text x="105" y="31" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#315f56">Fixture demo included</text>
+      <rect x="226" width="232" height="48" rx="24" fill="#eef3df"/>
+      <text x="342" y="31" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#526548">Provider-neutral</text>
+      <rect x="474" width="232" height="48" rx="24" fill="#f1eee8"/>
+      <text x="590" y="31" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#6d655b">Human-in-the-loop</text>
+    </g>
+
+    <g transform="translate(874 158)">
+      <circle cx="92" cy="92" r="91" fill="none" stroke="#4b917f" stroke-width="1.5" opacity="0.4"/>
+      <circle cx="92" cy="92" r="67" fill="none" stroke="#4b917f" stroke-width="1.5" opacity="0.58"/>
+      <rect x="37" y="37" width="110" height="110" rx="36" fill="url(#card)"/>
+      <text x="92" y="106" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="800" fill="#fff">AI</text>
+      <path d="M20 229 H164" stroke="#d8e5e0" stroke-width="8" stroke-linecap="round"/>
+      <path d="M20 229 H126" stroke="#4b917f" stroke-width="8" stroke-linecap="round"/>
+      <text x="92" y="268" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#5f7671">REPORT WRITTEN BACK</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: ${RECRUIT_POSTGRES_IMAGE:-pgvector/pgvector:pg16}
+    container_name: recruit-ai-postgres
+    environment:
+      POSTGRES_USER: recruit
+      POSTGRES_PASSWORD: recruit
+      POSTGRES_DB: recruit_ai
+    ports:
+      - "5432:5432"
+    volumes:
+      - "${RECRUIT_DATA_ROOT}/postgres:/var/lib/postgresql/data"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U recruit -d recruit_ai"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: ${RECRUIT_REDIS_IMAGE:-valkey/valkey:8-alpine}
+    container_name: recruit-ai-redis
+    command: valkey-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - "${RECRUIT_DATA_ROOT}/redis:/data"
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  minio:
+    image: ${RECRUIT_MINIO_IMAGE:-minio/minio:latest}
+    container_name: recruit-ai-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: recruit
+      MINIO_ROOT_PASSWORD: recruit-password
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - "${RECRUIT_DATA_ROOT}/object-storage:/data"
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 3s
+      retries: 20

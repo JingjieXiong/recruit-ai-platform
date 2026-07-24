@@ -1,0 +1,12 @@
+{
+  "name": "@recruit-ai/interview-room",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "check": "node --check server.mjs && node --check public/app.js"
+  },
+  "description": "Provider-neutral browser interview runtime for Recruit AI Platform."
+}
