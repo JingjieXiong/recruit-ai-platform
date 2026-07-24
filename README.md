@@ -6,8 +6,6 @@ An evidence-first AI recruiting platform that connects job criteria, candidate m
 
 > Public-release candidate: all bundled examples are synthetic, `fixture` mode needs no external AI key, and the vendor-neutral browser interview runtime is included. Keep the repository **Private** until code ownership and third-party rights are confirmed.
 
-![Recruit AI Platform overview](media/social-preview.png)
-
 ## The complete recruiting loop
 
 ```mermaid

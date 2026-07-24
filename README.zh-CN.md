@@ -6,8 +6,6 @@
 
 > 这是待公开版本：仓库内置数据全部为合成数据，`fixture` 模式无需任何外部 AI 密钥，且包含厂商无关的浏览器面试服务。代码权属与第三方授权确认前，请保持仓库 **Private**。
 
-![Recruit AI Platform 项目概览](media/social-preview.png)
-
 ## 完整招聘闭环
 
 ```mermaid
