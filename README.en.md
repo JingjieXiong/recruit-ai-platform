@@ -8,52 +8,161 @@
 
 **Decisions may differ. Evidence must stay present.**
 
-Keep job criteria, candidate materials, AI screening, interview evidence, and report write-back in view. AI organizes the evidence; people make the final decision.
+An open-source, evidence-first AI recruiting platform that connects job criteria, candidate materials, AI prescreening, structured interviews, report write-back, and human decisions in one traceable workflow.
 
 </div>
 
-[Architecture](docs/architecture.md) · [Provider interface](docs/provider-interface.md) · [Privacy & fairness](docs/privacy-and-fairness.md)
+<p align="center">
+  <a href="#how-the-product-works">Product tour</a> ·
+  <a href="#why-this-is-not-another-ai-resume-scorer">Why it is different</a> ·
+  <a href="#try-it-locally">Try it</a> ·
+  <a href="docs/architecture.md">Architecture</a> ·
+  <a href="docs/privacy-and-fairness.md">Privacy & fairness</a>
+</p>
 
-> Public-release candidate: all bundled examples are synthetic, `fixture` mode needs no external AI key, and the vendor-neutral browser interview runtime is included. Keep the repository **Private** until code ownership and third-party rights are confirmed.
+> Every bundled job, candidate, and report is synthetic. The default demo needs no external AI key and never touches real candidate data. The digital-human visual demonstrates an optional external interview provider; its vendor implementation, credentials, and proprietary SDKs are not distributed in this repository.
+
+## What it is
+
+Many recruiting AI products solve one isolated problem: parse a resume, produce a score, or run a conversation. The harder problem is preserving the reasoning behind a hiring decision:
+
+- What is the role actually evaluating?
+- Which candidate material supports a conclusion?
+- What did AI find, and what remains uncertain?
+- Why did the interview ask those questions?
+- How does the report return to the same candidate context?
+- Who made the final decision, based on which evidence?
+
+**在场 · 招聘版** turns information scattered across an ATS, documents, chat threads, and interview tools into one evidence chain. AI organizes, compares, and asks follow-up questions; accountable people make the decisions.
+
+## Why this is not another AI resume scorer
+
+| | Traditional ATS | Point AI screener | 在场 · 招聘版 |
+| --- | --- | --- | --- |
+| Primary focus | Workflow states and forms | One model output | The evidence chain from job criteria to interview report |
+| Basis for conclusions | Reviewers search manually | Often a score or summary | Material snapshots, cited evidence, gaps, and conclusions remain separate |
+| Interview handoff | Usually an external jump | Rarely included | Plans, session warm-up, and structured report write-back |
+| Traceability | Records what happened | Difficult to reproduce | Records why a judgment was made and which materials were used |
+| Decision boundary | Depends on configuration | Scores can become decisions | AI supplies evidence; people own progression, rejection, and offers |
+| Integration | Fixed system | Often tied to one model | OpenAI-compatible models plus a stable Interview Bridge |
+
+### Product advantages
+
+1. **Evidence first, not score first**
+
+   Rubrics, candidate materials, citations, AI conclusions, and unresolved gaps remain distinct. Reviewers can agree or disagree without trusting an unexplained overall score.
+
+2. **One recruiting loop, not isolated AI features**
+
+   The role, application, evidence pack, prescreen, interview plan, interview runtime, and report all share the same candidate context.
+
+3. **The interview validates evidence instead of starting over**
+
+   Gaps found during prescreening become structured interview questions. Results are written back against the original rubric, reducing repeated reading and context loss.
+
+4. **People stay in the decision loop**
+
+   The platform does not automatically reject or hire candidates. AI output is a reviewable working paper; the accountable recruiter makes the final call.
+
+5. **Demo-ready and provider-neutral**
+
+   A keyless fixture runs the full product loop. Production integrations use a small Bridge contract, so the product is not locked to one avatar, speech, or RTC vendor.
 
 ## The complete recruiting loop
 
 ```mermaid
 flowchart LR
-    A["Job & evidence rubric"] --> B["Candidate materials"]
+    A["Job & evidence rubric"] --> B["Application & materials"]
     B --> C["Evidence pack"]
-    C --> D["AI prescreen"]
-    D --> E["Interview plan"]
-    E --> F["Browser or external provider"]
-    F --> G["Structured report callback"]
-    G --> H["Human hiring decision"]
+    C --> D["AI prescreen & gap finding"]
+    D --> E["Structured interview plan"]
+    E --> F["Browser or external interview provider"]
+    F --> G["Report write-back"]
+    G --> H["Recruiter review & human decision"]
 ```
 
-The platform does not treat model output as a hiring decision. It organizes evidence, exposes gaps, runs a structured interview workflow, and returns the result to a recruiter for review.
+The system keeps context present at every step without presenting model output as an objective judgment about a person.
 
-## Product tour
+## How the product works
 
-| Candidate job feed | Candidate materials |
-| --- | --- |
-| ![Synthetic candidate job feed](media/screenshots/01-candidate-job-feed.png) | ![Synthetic candidate materials](media/screenshots/02-candidate-materials.png) |
-| Evidence-based recruiter workbench | Interview orchestration |
-| ![Recruiter evaluation workbench](media/screenshots/03-recruiter-evaluation-workbench.png) | ![Provider-neutral interview orchestration](media/screenshots/04-interview-orchestration.png) |
-| Digital-human interview room | Structured report written back |
-| ![Digital-human interview room with local media disabled](media/screenshots/05-digital-human-interview-room.png) | ![Structured interview report](media/screenshots/07-structured-interview-report.png) |
+### 1. Keep the role criteria present
 
-All product data shown is synthetic. The digital-human screenshot was captured from the local runtime in subscriber-only mode with the camera and microphone disabled. No production candidate data, personal desktop or browser chrome, chat records, or historical runtime captures are used.
+Candidates see a clear role, while recruiters maintain the JD, supporting knowledge, and evaluation rubric under the same job. AI processing and interview questions use this shared standard instead of improvising a new one.
 
-## What is included
+<p align="center">
+  <img src="media/screenshots/01-candidate-job-feed.png" width="100%" alt="Candidate job feed with a synthetic role and application entry point">
+</p>
 
-| Capability | Fixture mode | OpenAI-compatible mode |
+### 2. Let candidates represent themselves with complete materials
+
+A resume is only one source of evidence. Candidates can add work samples, project notes, and supporting knowledge. The system locks the material snapshot used for evaluation so the underlying evidence does not quietly change.
+
+<p align="center">
+  <img src="media/screenshots/02-candidate-materials.png" width="100%" alt="Candidate materials page with a resume, work sample, and supporting material">
+</p>
+
+### 3. AI organizes evidence; recruiters see its basis and gaps
+
+The workbench keeps prescreen findings, cited material, the locked snapshot, and unresolved questions in one candidate context. Reviewers see more than pass or fail: they see why a conclusion was made and what still needs verification.
+
+<p align="center">
+  <img src="media/screenshots/03-recruiter-evaluation-workbench.png" width="100%" alt="Evidence-based recruiter workbench with prescreen status, material snapshot, and interview state">
+</p>
+
+### 4. Turn evidence gaps into an interview plan
+
+Unverified capabilities become structured questions, and the interview session is warmed up automatically. Interview preparation stays connected to prescreening without forcing the recruiter to operate the system before results are ready.
+
+<p align="center">
+  <img src="media/screenshots/04-interview-orchestration.png" width="100%" alt="Interview orchestration page with configuration and the browser demo provider">
+</p>
+
+### 5. Swap interview providers without changing the recruiting workflow
+
+The public edition includes a browser demo and can connect to external digital-human, speech, or RTC services through the Interview Bridge. The visual below shows an optional external digital-human flow; it receives the avatar stream only, with the local camera and microphone disabled.
+
+<p align="center">
+  <img src="media/screenshots/05-digital-human-interview-room.png" width="100%" alt="Optional external digital-human interview provider with local camera and microphone disabled">
+</p>
+
+### 6. Write the report back to the original evaluation context
+
+When the interview ends, the provider posts a structured report through a callback. Recruiters can compare the rubric, source materials, prescreen judgment, and interview evidence before making a human decision.
+
+<p align="center">
+  <img src="media/screenshots/07-structured-interview-report.png" width="100%" alt="Structured interview report with evidence, rubric items, and a human review entry point">
+</p>
+
+## Who it is for
+
+| Actor | Main job | What the platform provides |
+| --- | --- | --- |
+| Recruiter / hiring manager | Define criteria, review evidence, make decisions | A unified workbench, evidence snapshots, gap prompts, structured reports |
+| Candidate | Understand the role, submit materials, interview | A coherent application flow, material supplements, a clear interview journey |
+| Platform and AI team | Connect models, interview services, and enterprise systems | Provider-neutral interfaces, schema validation, async jobs, callback contracts |
+
+## Capability boundaries
+
+| Capability | Fixture mode | OpenAI-compatible / external provider |
 | --- | --- | --- |
 | Job definition and evaluation rubric | Included | Included |
-| Candidate resume, portfolio, and knowledge materials | Synthetic | User-provided |
-| Evidence pack and structured prescreen | Deterministic fixture | Model-generated, schema validated |
-| Interview plan | Deterministic fixture | Model-generated, schema validated |
+| Resume, work samples, supporting material | Synthetic | User-provided |
+| Evidence pack and structured prescreen | Deterministic fixture | Model-generated and schema validated |
+| Interview plan | Deterministic fixture | Model-generated and schema validated |
 | Interview runtime | Browser demo | Browser demo or external provider |
-| Structured report callback | Included | Included |
-| Final decision | Human only | Human only |
+| Structured report write-back | Included | Included |
+| Final hiring decision | Human only | Human only |
+
+## Privacy, fairness, and human decisions
+
+- Candidate materials are sensitive personal data; apply purpose limitation, least privilege, retention limits, and deletion workflows.
+- Protected attributes or proxy variables must not automate hiring decisions.
+- A model score is supporting evidence, not an objective measure of a person.
+- Rejection, progression, and offers require an accountable human reviewer.
+- Candidates should be able to correct materials, request human review, and understand how automated tools were used.
+- Fixture output is synthetic and must never be presented as a real assessment.
+
+Read the full [privacy and fairness guidance](docs/privacy-and-fairness.md).
 
 ## Architecture
 
@@ -89,11 +198,13 @@ flowchart TB
     Worker --> Objects
 ```
 
-The main system and interview runtime communicate through a small provider contract. Vendor-specific RTC, avatar, voice, application IDs, and credentials are intentionally not included. See [architecture](docs/architecture.md) and [provider interface](docs/provider-interface.md).
+The main platform and interview runtime communicate through a small provider contract. Vendor-specific RTC, avatar, voice, application IDs, and credentials are not included. See the [architecture](docs/architecture.md) and [provider interface](docs/provider-interface.md).
 
-## Quick start
+## Try it locally
 
-Prerequisites: Node.js 22+, pnpm 10+, Docker with Compose.
+Running the project is one way to experience the product, not the center of this README. The default fixture generates a synthetic job, candidate, evidence pack, and report without any external AI key.
+
+Prerequisites: Node.js 22+, pnpm 10+, and Docker Compose.
 
 ```bash
 cp .env.example .env
@@ -101,38 +212,11 @@ pnpm install
 pnpm demo
 ```
 
-Open:
+Open the candidate app at `http://127.0.0.1:5173/candidate`, recruiter app at `http://127.0.0.1:5173/admin`, or interview preview at `http://127.0.0.1:5174/?preview=1`.
 
-- Candidate: `http://127.0.0.1:5173/candidate`
-- Recruiter: `http://127.0.0.1:5173/admin`
-- Interview preview: `http://127.0.0.1:5174/?preview=1`
-
-Stop everything with `pnpm stop`. Regenerate the synthetic dataset with `pnpm demo:data`.
-
-## Demo and live provider modes
-
-### `AI_MODE=fixture`
-
-- Requires no external API key.
-- Uses synthetic jobs, a synthetic candidate, and pre-generated schema-valid outputs.
-- Clearly records the provider as `fixture`.
-- Exists for product evaluation, tests, screenshots, and public demos.
-
-### `AI_MODE=openai-compatible`
-
-- Requires `AI_BASE_URL`, `AI_API_KEY`, and `AI_MODEL`.
-- Uses the `/chat/completions` JSON interface.
-- Fails explicitly when credentials are missing, provider calls fail, or outputs violate the schema.
-- Never silently falls back to fixture output.
-
-### Interview runtime
-
-- `INTERVIEW_RUNTIME=browser-demo` uses the included typed-answer and browser speech-synthesis implementation.
-- `INTERVIEW_RUNTIME=external` points the Bridge at a compatible external service through `INTERVIEW_BASE_URL` and `INTERVIEW_PUBLIC_BASE_URL`.
+Useful commands: `pnpm stop`, `pnpm demo:data`, `pnpm check`, and `pnpm test:e2e`. See [.env.example](.env.example) for live model settings.
 
 ## Stable Bridge contract
-
-The public contract keeps the integration surface deliberately small:
 
 ```http
 POST /api/agent-sessions
@@ -142,48 +226,23 @@ GET  /api/health
 GET  /healthz
 ```
 
-`POST /api/agent-sessions` receives a `projectSnapshot`, interview plan, and callback metadata. The interview provider returns a session and eventually posts a structured report. Health endpoints expose modes and readiness only—never API keys, private paths, or configured internal URLs.
+`POST /api/agent-sessions` receives a `projectSnapshot`, interview plan, and callback metadata. The provider returns a session and posts a structured report when complete. Health endpoints expose modes and readiness only—never keys, private paths, or internal URLs.
 
 See [docs/provider-interface.md](docs/provider-interface.md) for payload examples and lifecycle rules.
-
-## Privacy, fairness, and decision boundaries
-
-- Candidate materials are sensitive personal data; use purpose limitation, access control, retention limits, and deletion workflows.
-- Protected or proxy attributes must not be used to automate hiring decisions.
-- A model score is supporting evidence, not an objective measure of a person.
-- Rejections, progression, and offers require an accountable human reviewer.
-- Candidates should be able to correct material, request human review, and understand how automated tools were used.
-- Fixture output is synthetic and must never be presented as a real assessment.
-
-Read the full [privacy and fairness guidance](docs/privacy-and-fairness.md).
-
-## Commands
-
-| Command | Purpose |
-| --- | --- |
-| `pnpm demo` | Start infrastructure, migrate, seed synthetic data, and run all services |
-| `pnpm stop` | Stop application processes and local infrastructure |
-| `pnpm demo:data` | Regenerate the synthetic fixture |
-| `pnpm check` | Syntax checks plus public-tree sensitive-content scan |
-| `pnpm test:e2e` | Full fixture flow: job → application → prescreen → interview → callback → human review |
-| `pnpm media:capture` | Recreate synthetic README screenshots from a running capture instance |
 
 ## Roadmap
 
 - [x] Synthetic, keyless end-to-end fixture
-- [x] Evidence pack, prescreen, interview plan, and report callback
+- [x] Evidence pack, prescreen, interview plan, and report write-back
 - [x] Provider-neutral browser interview implementation
-- [x] English and Chinese documentation
-- [ ] Confirm code ownership and third-party rights
-- [ ] Add Apache-2.0 `LICENSE` after approval
+- [x] Chinese and English product documentation
+- [x] Apache-2.0 open-source license
 - [ ] Publish `v0.1.0-public-preview`
 - [ ] Add optional, separately licensed provider adapters
 - [ ] Expand bias evaluation, accessibility, and deletion tests
 
-## Contributing and security
+## Contributing, license, and security
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a change. Report security issues through GitHub private vulnerability reporting as described in [SECURITY.md](SECURITY.md).
+The project is licensed under [Apache-2.0](LICENSE). Third-party components and optional provider boundaries are documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-## License status
-
-No open-source license is granted yet. This repository must remain Private until ownership and third-party authorization are confirmed. After approval, the intended release license is Apache-2.0. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a change. Report security issues through GitHub private vulnerability reporting as described in [SECURITY.md](SECURITY.md); do not disclose sensitive details in a public issue.
