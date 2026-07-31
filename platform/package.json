@@ -37,8 +37,8 @@
         "verify": "node scripts/verify_backend_v1.mjs"
     },
     "dependencies": {
-        "@fastify/static": "^9.1.1",
-        "bullmq": "^5.63.0",
+        "@fastify/static": "^10.1.2",
+        "bullmq": "^5.81.2",
         "dotenv": "^17.2.3",
         "fastify": "^5.6.2",
         "minio": "^8.0.6",
