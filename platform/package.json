@@ -46,7 +46,7 @@
         "zod": "^4.1.12"
     },
     "devDependencies": {
-        "playwright": "^1.61.1"
+        "playwright": "^1.62.0"
     },
     "description": "Candidate, recruiter, API, and worker modules for Recruit AI Platform."
 }
