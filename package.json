@@ -22,7 +22,7 @@
     ]
   },
   "devDependencies": {
-    "playwright": "^1.61.1"
+    "playwright": "^1.62.0"
   },
   "description": "Open-source AI recruiting platform for resume screening, evidence-based candidate evaluation, interview planning, and AI interview orchestration."
 }
